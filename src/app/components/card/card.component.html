@@ -1,0 +1,13 @@
+<div
+  class="display"
+  [ngClass]="{
+    'none-left': card?.numberRemaining === 0,
+    active: card?.numberRemaining ?? 0 > 0
+  }"
+  (click)="removeCard()"
+  (contextmenu)="addCard($event)"
+>
+  <img id="shown-picture" [src]="card?.imageUrl" draggable="false" />
+  <span>{{ card?.title }}</span>
+  <span>{{ card?.numberRemaining }} of {{ numberOfDecks }}</span>
+</div>
