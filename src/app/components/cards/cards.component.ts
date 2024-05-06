@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Card } from '../../models/cards';
 import { CardComponent } from '../card/card.component';
 import { CommonModule } from '@angular/common';
@@ -14,10 +14,10 @@ export const CARD_VALUES = [
   '8',
   '9',
   '10',
-  'jack',
-  'queen',
-  'king',
-  'ace',
+  'J',
+  'Q',
+  'K',
+  'A',
 ];
 
 @Component({
@@ -28,20 +28,20 @@ export const CARD_VALUES = [
   imports: [CardComponent, CommonModule],
 })
 export class CardsComponent {
+  @Output() cardRemoved = new EventEmitter<Card>();
   public cards: Card[] = [];
-  private readonly numberOfDecks = 8;
+  public readonly numberOfDecks = 8;
   public totalCards = this.cards.length;
   constructor() {
-    for (let group of CARD_GROUPS) {
-      for (let value of CARD_VALUES) {
-        this.cards.push({
-          id: this.cards.length,
-          title: `${value} of ${group}`,
-          imageUrl: `assets/cards/${value}_of_${group}.svg`,
-          numberRemaining: this.numberOfDecks,
-        });
-      }
+    for (let value of CARD_VALUES) {
+      this.cards.push({
+        id: this.cards.length,
+        title: `${value}`,
+        imageUrl: `assets/cards/${value.toLocaleLowerCase()}_of_hearts.svg`,
+        numberRemaining: this.numberOfDecks * 4,
+      });
     }
+
     this.totalCards = this.cards.length;
   }
 
@@ -50,6 +50,6 @@ export class CardsComponent {
   }
 
   onCardRemoved(card: Card) {
-
+    this.cardRemoved.emit(card);
   }
 }

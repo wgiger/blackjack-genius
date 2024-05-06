@@ -4,5 +4,15 @@
 </div>
 
 <div class="content-container">
-    <app-cards></app-cards>
+    <app-cards (cardRemoved)="onCardAdded($event)"></app-cards>
 </div>
+
+<div class="stats">
+    <app-statistics [playersHand]="playersHand" [dealersHand]="dealersHand"></app-statistics>
+</div>
+
+
+<h3>{{isPlayersTurn ? 'Player' : 'Dealer'}}'s Turn</h3>
+<button mat-flat-button (click)="changeTurns()" [disabled]="!isPlayersTurn">
+    {{isPlayersTurn ? 'Player Done' : 'Dealer\'s Turn'}}
+</button>

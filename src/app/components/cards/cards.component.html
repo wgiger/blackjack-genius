@@ -1,3 +1,3 @@
 <div class="cards card-container">
-    <app-card *ngFor="let card of this.cards" [card]="card"></app-card>
+    <app-card *ngFor="let card of this.cards" (cardRemoved)="onCardRemoved($event)" [numberOfCards]="numberOfDecks * 4" [card]="card"></app-card>
 </div>

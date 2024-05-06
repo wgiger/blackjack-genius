@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CardComponent {
   @Input() card: Card | undefined;
-  @Input() readonly numberOfDecks: number = 8;
+  @Input() numberOfCards: number = 32;
   @Output() cardRemoved = new EventEmitter<Card>();
   @Output() cardAdded = new EventEmitter<Card>();
 
@@ -24,7 +24,7 @@ export class CardComponent {
 
   public addCard(event: MouseEvent) {
     event?.preventDefault();
-    if (this.card && this.card.numberRemaining < this.numberOfDecks) {
+    if (this.card && this.card.numberRemaining < this.numberOfCards) {
       this.card.numberRemaining += 1;
       this.cardRemoved.emit(this.card);
     }
