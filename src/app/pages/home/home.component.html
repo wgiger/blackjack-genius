@@ -1,18 +1,28 @@
 <div class="title-ribbon">
-    <h1>Blackjack Copilot</h1>
-
+  <h1>Blackjack Copilot</h1>
 </div>
 
 <div class="content-container">
-    <app-cards (cardRemoved)="onCardAdded($event)"></app-cards>
+  <app-cards (cardRemoved)="onCardAdded($event)"></app-cards>
 </div>
 
+<div class="stats"></div>
+
+<h3>{{ isPlayersTurn ? "Player" : "Dealer" }}'s Turn</h3>
 <div class="stats">
-    <app-statistics [playersHand]="playersHand" [dealersHand]="dealersHand"></app-statistics>
+  <span>Dealers Total {{ getDealersHandValue() }}</span>
+  <span>Players Total {{ getPlayersHandValue() }}</span>
+  <span>
+    Basic Strategy: {{ showDecision() }}
+  </span>
+  <span>
+    Card Count: {{ trueCount }}
+  </span>
 </div>
-
-
-<h3>{{isPlayersTurn ? 'Player' : 'Dealer'}}'s Turn</h3>
-<button mat-flat-button (click)="changeTurns()" [disabled]="!isPlayersTurn">
-    {{isPlayersTurn ? 'Player Done' : 'Dealer\'s Turn'}}
+<button (click)="changeTurns()" [disabled]="!isPlayersTurn">
+  {{ isPlayersTurn ? "Player Done" : "Dealer's Turn" }}
 </button>
+<button (click)="onReset()" *ngIf="isGameOver">Play Again</button>
+<button (click)="endGame()" [disabled]="isGameOver">End Game</button>
+
+<span *ngIf="isGameOver">{{ gameResult() }}</span>
